@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  neo4j:
+    image: datascientest/neo4j
+    container_name: subway_routes_neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    networks:
+      - network_API_db
+  fastapi:
+    image: route_api:1.0.0
+    container_name: route_api_server
+    ports:
+      - "8000:8000"
+    environment:
+      NEO4J_ADDRESS: subway_routes_neo4j
+    networks:
+      - network_API_db
+networks:
+  network_API_db:
